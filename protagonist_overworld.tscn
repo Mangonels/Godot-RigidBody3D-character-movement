@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://6sn4kx0yk02u"]
+
+[ext_resource type="Script" path="res://Scripts/Characters/Protagonists/Overworld/protagonist_movement_overworld.gd" id="1_piyay"]
+[ext_resource type="Script" path="res://Scripts/Characters/Protagonists/Overworld/protagonist_logic_overworld.gd" id="2_gffum"]
+[ext_resource type="PhysicsMaterial" uid="uid://b1cnglwpnsnow" path="res://Materials_Physics/protagonist_body.tres" id="2_k008w"]
+[ext_resource type="Resource" uid="uid://bo45fowbij50k" path="res://Custom_Resource_Instances/Character_Data/Protagonist_Data/ryan_and_ece.tres" id="4_iyjfx"]
+[ext_resource type="Script" path="res://Scripts/Framework/contact_checker_groups.gd" id="5_c1qpy"]
+[ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="5_j5ij3"]
+[ext_resource type="Script" path="res://Scripts/Framework/debug/collision_visualizer_3d.gd" id="5_m8f4q"]
+[ext_resource type="PhysicsMaterial" uid="uid://buf70um7bc11j" path="res://Materials_Physics/protagonist_feet.tres" id="6_r2ygw"]
+[ext_resource type="Script" path="res://Scripts/Characters/Protagonists/Overworld/protagonist_camera_target_pivot_adjuster.gd" id="7_4beft"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yca0g"]
+radius = 0.8
+height = 2.94011
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4wikm"]
+radius = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qu6ev"]
+radius = 0.785
+
+[node name="Protagonist_Overworld" type="Node3D"]
+
+[node name="ProtagonistLogic_Overworld" type="Node" parent="." node_paths=PackedStringArray("protagonist_body", "protagonist_feet")]
+script = ExtResource("2_gffum")
+protagonist_body = NodePath("../Protagonist_Body_Movement_Overworld")
+protagonist_feet = NodePath("../Protagonist_Feet")
+
+[node name="Protagonist_Body_Movement_Overworld" type="RigidBody3D" parent="." node_paths=PackedStringArray("ground_checker") groups=["entity"]]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 0.5
+physics_material_override = ExtResource("2_k008w")
+script = ExtResource("1_piyay")
+protagonist_data = ExtResource("4_iyjfx")
+ground_checker = NodePath("../Protagonist_Feet/Grounded_Checker")
+
+[node name="Smoothing" type="Node3D" parent="Protagonist_Body_Movement_Overworld"]
+script = ExtResource("5_j5ij3")
+
+[node name="Collision_Visualizer3D" type="MeshInstance3D" parent="Protagonist_Body_Movement_Overworld/Smoothing" node_paths=PackedStringArray("collision")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52963, 0)
+skeleton = NodePath("../../Body_Collision")
+script = ExtResource("5_m8f4q")
+collision = NodePath("../../Body_Collision")
+
+[node name="Body_Collision" type="CollisionShape3D" parent="Protagonist_Body_Movement_Overworld"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.52963, 0)
+shape = SubResource("CapsuleShape3D_yca0g")
+
+[node name="JoltPinJoint3D" type="JoltPinJoint3D" parent="."]
+node_a = NodePath("../Protagonist_Body_Movement_Overworld")
+node_b = NodePath("../Protagonist_Feet")
+
+[node name="Protagonist_Feet" type="RigidBody3D" parent="." groups=["entity"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.802473, 0)
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 0.5
+physics_material_override = ExtResource("6_r2ygw")
+
+[node name="Smoothing" type="Node3D" parent="Protagonist_Feet"]
+script = ExtResource("5_j5ij3")
+
+[node name="Collision_Visualizer3D" type="MeshInstance3D" parent="Protagonist_Feet/Smoothing" node_paths=PackedStringArray("collision")]
+skeleton = NodePath("../../Feet_Collision")
+script = ExtResource("5_m8f4q")
+collision = NodePath("../../Feet_Collision")
+
+[node name="Feet_Collision" type="CollisionShape3D" parent="Protagonist_Feet"]
+shape = SubResource("SphereShape3D_4wikm")
+
+[node name="Protagonist_Camera_Target_Pivot_Adjuster" type="Node3D" parent="Protagonist_Feet" node_paths=PackedStringArray("protagonist_logic", "ground_checker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.802473, 0)
+script = ExtResource("7_4beft")
+protagonist_logic = NodePath("../../ProtagonistLogic_Overworld")
+ground_checker = NodePath("../Grounded_Checker")
+
+[node name="Grounded_Checker" type="Area3D" parent="Protagonist_Feet"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.793667, 0)
+script = ExtResource("5_c1qpy")
+is_blacklist = true
+groups = PackedStringArray("entity")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Protagonist_Feet/Grounded_Checker"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.737088, 0)
+shape = SubResource("SphereShape3D_qu6ev")
