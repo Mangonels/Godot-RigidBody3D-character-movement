@@ -1,15 +1,15 @@
 [gd_scene load_steps=19 format=3 uid="uid://dcfo6k3o0rx6h"]
 
 [ext_resource type="Material" uid="uid://d246dff320met" path="res://Materials/Layout/0.TestScene/seamless_grid_green.tres" id="1_8se0a"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_snaki"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_6ka25"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_e7e8u"]
-[ext_resource type="Script" path="res://Scripts/Characters/Protagonists/Overworld/protagonist_logic_overworld.gd" id="5_1eouf"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="5_47yrs"]
+[ext_resource type="Script" uid="uid://d0mejseoe3ew1" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_snaki"]
+[ext_resource type="Script" uid="uid://du5gvvl23ud4" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_6ka25"]
+[ext_resource type="Script" uid="uid://ssylehklsb8l" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_e7e8u"]
+[ext_resource type="Script" uid="uid://caxrdui02adbs" path="res://Scripts/Characters/Protagonists/Overworld/protagonist_logic_overworld.gd" id="5_1eouf"]
+[ext_resource type="Script" uid="uid://dh0e7i7ivecsm" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="5_47yrs"]
 [ext_resource type="Resource" uid="uid://clyqi6rcjerut" path="res://Custom_Resources_Data/protagonist_data.tres" id="5_h5323"]
-[ext_resource type="Script" path="res://Scripts/Characters/Protagonists/Overworld/protagonist_movement_overworld.gd" id="6_hcaqf"]
-[ext_resource type="Script" path="res://Scripts/Framework/debug/collision_visualizer_3d.gd" id="7_35nrg"]
-[ext_resource type="Script" path="res://Scripts/Framework/contact_checker_groups.gd" id="8_5ywc0"]
+[ext_resource type="Script" uid="uid://bi538ieyl3sc3" path="res://Scripts/Characters/Protagonists/Overworld/protagonist_movement_overworld.gd" id="6_hcaqf"]
+[ext_resource type="Script" uid="uid://dpc0t0d6tsvvn" path="res://Scripts/Framework/debug/collision_visualizer_3d.gd" id="7_35nrg"]
+[ext_resource type="Script" uid="uid://cavpdvkudaxly" path="res://Scripts/Framework/contact_checker_groups.gd" id="8_5ywc0"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_j5tj1"]
 size = Vector2(200, 200)
@@ -106,7 +106,7 @@ shape = SubResource("CapsuleShape3D_yca0g")
 script = ExtResource("7_35nrg")
 collision = NodePath("../Body_Collision")
 
-[node name="JoltPinJoint3D" type="JoltPinJoint3D" parent="Protagonist_Overworld"]
+[node name="PinJoint3D" type="PinJoint3D" parent="Protagonist_Overworld"]
 node_a = NodePath("../Protagonist_Body_Movement_Overworld")
 node_b = NodePath("../Protagonist_Feet")
 

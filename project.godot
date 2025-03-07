@@ -12,7 +12,7 @@ config_version=5
 
 config/name="character_movement"
 run/main_scene="res://scene.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -53,6 +53,7 @@ jump={
 
 [physics]
 
-3d/physics_engine="JoltPhysics3D"
+3d/physics_engine="Jolt Physics"
+jolt_physics_3d/simulation/areas_detect_static_bodies=true
 3d/default_gravity=100.0
 jolt_3d/collisions/areas_detect_static_bodies=true

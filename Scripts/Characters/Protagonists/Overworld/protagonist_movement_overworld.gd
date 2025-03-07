@@ -56,30 +56,8 @@ func horizontal():
 	var velocity_difference : Vector2 = target_velocity - Vector2(self.linear_velocity.x, self.linear_velocity.z)
 	
 	# A proportional (based on the difference from current speed to target speed) movement force is calculated:
-	# - If we're below the target velocity, multiplying the acceleration or 
-	# deceleration rate per the total velocity difference from target (velocity_difference)
-	# - If we're above the target velocity, the horizontal_move_force needs to be 0.0
-	var horiz_mov_force : Vector3
-	# Are both the current velocity and the target velocity in positive x axis?
-	if self.linear_velocity.x > 0.0 and target_velocity.x > 0.0:
-		# Don't add force in x axis if the target velocity (magnitude) in x is higher than the current velocity in x, 
-		# else force is acceleration rate multiplied by velocity difference
-		horiz_mov_force.x = 0.0 if self.linear_velocity.x > target_velocity.x else velocity_difference.x * acceleration_rate
-	# Are both the current velocity and the target velocity in negative x axis?
-	elif self.linear_velocity.x < 0.0 and target_velocity.x < 0.0:
-		# Don't add negative force in x axis if the target velocity (magnitude) in x is higher than the current velocity in x,
-		# else force is acceleration rate multiplied by velocity difference
-		horiz_mov_force.x = 0.0 if self.linear_velocity.x < target_velocity.x else velocity_difference.x * acceleration_rate
-	# Current velocity and target velocity are signed differently (target velocity couldn't posibly 
-	# reach being 0.0 at this point), so we also apply proportional force to cover the difference in this case
-	else: horiz_mov_force.x = velocity_difference.x * acceleration_rate
-	
-	# Same operations as commented previousyly for the x axis, now for the z axis
-	if self.linear_velocity.z > 0.0 and target_velocity.y > 0.0:
-		horiz_mov_force.z = 0.0 if self.linear_velocity.z > target_velocity.y else velocity_difference.y * acceleration_rate
-	elif self.linear_velocity.z < 0.0 and target_velocity.y < 0.0:
-		horiz_mov_force.z = 0.0 if self.linear_velocity.z < target_velocity.y else velocity_difference.y * acceleration_rate
-	else: horiz_mov_force.z = velocity_difference.y * acceleration_rate
+	var mov_force_2d : Vector2 = velocity_difference * acceleration_rate
+	var horiz_mov_force : Vector3 = Vector3(mov_force_2d.x, 0.0, mov_force_2d.y)
 	
 	# Apply the right precalculated amount of horizontal movement force
 	# to the protagonist entity

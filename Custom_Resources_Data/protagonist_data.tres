@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ProtagonistGlobalData_RES" load_steps=2 format=3 uid="uid://clyqi6rcjerut"]
 
-[ext_resource type="Script" path="res://Custom_Resources/Character_Data/Protagonist_Data/protagonist_global_data_res.gd" id="1_xop1o"]
+[ext_resource type="Script" uid="uid://o0eoawinwu7b" path="res://Custom_Resources/Character_Data/Protagonist_Data/protagonist_global_data_res.gd" id="1_xop1o"]
 
 [resource]
 script = ExtResource("1_xop1o")
