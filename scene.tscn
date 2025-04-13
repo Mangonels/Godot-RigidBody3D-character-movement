@@ -86,10 +86,11 @@ collision_mask = 0
 
 [node name="Protagonist_Overworld" type="Node3D" parent="."]
 
-[node name="ProtagonistLogic_Overworld" type="Node" parent="Protagonist_Overworld" node_paths=PackedStringArray("protagonist_body", "protagonist_feet")]
+[node name="ProtagonistLogic_Overworld" type="Node" parent="Protagonist_Overworld" node_paths=PackedStringArray("protagonist_body", "protagonist_feet", "ground_checker")]
 script = ExtResource("5_1eouf")
 protagonist_body = NodePath("../Protagonist_Body_Movement_Overworld")
 protagonist_feet = NodePath("../Protagonist_Feet")
+ground_checker = NodePath("../Protagonist_Feet/Grounded_Checker")
 
 [node name="Protagonist_Body_Movement_Overworld" type="RigidBody3D" parent="Protagonist_Overworld" node_paths=PackedStringArray("main_camera", "ground_checker") groups=["entity"]]
 axis_lock_angular_x = true
