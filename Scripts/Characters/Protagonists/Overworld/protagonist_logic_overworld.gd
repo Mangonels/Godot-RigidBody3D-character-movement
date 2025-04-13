@@ -34,7 +34,7 @@ func _on_grounded_ungrounded_checks():
 	# return friction on landing (could optionally be done gradually)
 	# FIXES: Velocity halt on landing
 	
-	# Just detatched from ground check:
+	# Just detached from ground check:
 	if(_grounded_previous_frame and not ground_checker.is_contacting()):
 		protagonist_feet.physics_material_override.set_friction(0.0)
 	# Just landed check:
