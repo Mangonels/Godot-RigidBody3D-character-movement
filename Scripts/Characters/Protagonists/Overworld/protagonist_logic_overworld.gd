@@ -30,7 +30,7 @@ func _process(_delta):
 	last_jump_input_start += _delta
 
 func _on_grounded_ungrounded_checks():
-	# Remove feet friction when detatching from ground, 
+	# Remove feet friction when detaching from ground, 
 	# return friction on landing (could optionally be done gradually)
 	# FIXES: Velocity halt on landing
 	
