@@ -19,7 +19,3 @@ func _ready():
 	
 	if mesh_shape != null:
 		self.mesh = mesh_shape
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

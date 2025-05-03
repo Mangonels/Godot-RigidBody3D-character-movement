@@ -1,11 +1,10 @@
 [gd_scene load_steps=20 format=3 uid="uid://dcfo6k3o0rx6h"]
 
 [ext_resource type="Material" uid="uid://d246dff320met" path="res://Materials/Layout/0.TestScene/seamless_grid_green.tres" id="1_8se0a"]
-[ext_resource type="Script" uid="uid://d0mejseoe3ew1" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_snaki"]
-[ext_resource type="Script" uid="uid://du5gvvl23ud4" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_6ka25"]
-[ext_resource type="Script" uid="uid://ssylehklsb8l" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_e7e8u"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="2_snaki"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="3_6ka25"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_e7e8u"]
 [ext_resource type="Script" uid="uid://caxrdui02adbs" path="res://Scripts/Characters/Protagonists/Overworld/protagonist_logic_overworld.gd" id="5_1eouf"]
-[ext_resource type="Script" uid="uid://dh0e7i7ivecsm" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="5_47yrs"]
 [ext_resource type="Resource" uid="uid://clyqi6rcjerut" path="res://Custom_Resources_Data/protagonist_data.tres" id="5_h5323"]
 [ext_resource type="Script" uid="uid://bi538ieyl3sc3" path="res://Scripts/Characters/Protagonists/Overworld/protagonist_movement_overworld.gd" id="6_hcaqf"]
 [ext_resource type="Script" uid="uid://dpc0t0d6tsvvn" path="res://Scripts/Framework/debug/collision_visualizer_3d.gd" id="7_35nrg"]
@@ -17,23 +16,11 @@ size = Vector2(200, 200)
 [sub_resource type="BoxShape3D" id="BoxShape3D_5qaps"]
 size = Vector3(200, 0.01, 200)
 
-[sub_resource type="Resource" id="Resource_4vmgx"]
+[sub_resource type="Resource" id="Resource_xlvrw"]
 script = ExtResource("4_e7e8u")
 duration = 1.0
 transition = 0
 ease = 2
-
-[sub_resource type="Resource" id="Resource_xq717"]
-script = ExtResource("5_47yrs")
-cull_mask = 1048575
-h_offset = 0.0
-v_offset = 0.0
-projection = 0
-fov = 75.0
-size = 1.0
-frustum_offset = Vector2(0, 0)
-near = 0.05
-far = 4000.0
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5juve"]
 friction = 0.0
@@ -51,6 +38,10 @@ radius = 0.8
 [sub_resource type="SphereShape3D" id="SphereShape3D_qu6ev"]
 radius = 0.785
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_5juve"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fy5k1"]
+
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -66,23 +57,26 @@ mesh = SubResource("PlaneMesh_j5tj1")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
 shape = SubResource("BoxShape3D_5qaps")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6.5)
-
-[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
-script = ExtResource("2_snaki")
-
-[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6.5)
+[node name="PhantomCamera3D" type="Node3D" parent="." node_paths=PackedStringArray("follow_target", "look_at_target")]
+transform = Transform3D(1, 0, 0, 0, 0.928475, 0.37139, 0, -0.37139, 0.928475, 0, 3.90102, 5.92847)
 script = ExtResource("3_6ka25")
 follow_mode = 6
-follow_target = NodePath("../Protagonist_Overworld/Protagonist_Body_Movement_Overworld/Collision_Visualizer3D")
-tween_resource = SubResource("Resource_4vmgx")
-camera_3d_resource = SubResource("Resource_xq717")
-follow_offset = Vector3(0, 1, 0)
-follow_distance = 6.5
-spring_length = 6.5
-collision_mask = 0
+follow_target = NodePath("../Protagonist_Overworld/Protagonist_Body_Movement_Overworld/Body_Collision")
+look_at_mode = 2
+look_at_target = NodePath("../Protagonist_Overworld/Protagonist_Body_Movement_Overworld/Body_Collision")
+tween_resource = SubResource("Resource_xlvrw")
+follow_offset = Vector3(0, 2, 5)
+metadata/_custom_type_script = "uid://csjccrhj5wnx7"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+physics_interpolation_mode = 1
+transform = Transform3D(1, 0, 0, 0, 0.928477, 0.371391, 0, -0.371391, 0.928477, 0, 3.90102, 5.92847)
+
+[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("2_snaki")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="Protagonist_Overworld" type="Node3D" parent="."]
 
@@ -139,3 +133,12 @@ groups = PackedStringArray("entity")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Protagonist_Overworld/Protagonist_Feet/Grounded_Checker"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.737088, 0)
 shape = SubResource("SphereShape3D_qu6ev")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.38616, 5.25908, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_5juve")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("BoxMesh_fy5k1")
