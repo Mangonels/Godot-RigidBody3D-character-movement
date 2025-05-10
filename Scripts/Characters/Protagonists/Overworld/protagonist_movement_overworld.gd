@@ -1,7 +1,7 @@
 class_name ProtagonistMovement_Overworld extends EntityMovement_Overworld
 
 @export var protagonist_data : ProtagonistGlobalData_RES
-@export var main_camera : Camera3D
+var main_camera : Camera3D
 @export var ground_checker : ContactChecker_Groups
 
 # True: Locks all movement,

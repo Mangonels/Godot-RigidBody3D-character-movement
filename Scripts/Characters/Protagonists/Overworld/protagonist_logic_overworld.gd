@@ -1,12 +1,16 @@
-class_name ProtagonistLogic_Overworld extends Node
+class_name ProtagonistLogic_Overworld extends Node3D
 
 var _grounded_previous_frame = false
 
 @export var protagonist_body : ProtagonistMovement_Overworld
 @export var protagonist_feet : RigidBody3D
 @export var ground_checker : ContactChecker_Groups
+@export var main_camera : Camera3D
 
 var last_jump_input_start : float = 0.0
+
+func _ready() -> void:
+	$Protagonist_Body_Movement_Overworld.main_camera = main_camera
 
 func _physics_process(_delta):
 	_on_grounded_ungrounded_checks()
